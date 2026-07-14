@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Career Compass AI — Find your path after 10th</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12142A;
+  --bg-deep:#0C0E1F;
+  --surface:#1B1E3D;
+  --surface2:#242A57;
+  --surface3:#2C3168;
+  --accent:#E8A33D;
+  --accent-dim:#C98B2C;
+  --accent2:#3ECFB2;
+  --accent2-dim:#2FA88A;
+  --danger:#E1657A;
+  --text:#F3F1EA;
+  --muted:#9B9FC7;
+  --muted-dim:#6C709C;
+  --line:rgba(243,241,234,0.10);
+  --line-strong:rgba(243,241,234,0.18);
+  --radius:18px;
+  --radius-sm:10px;
+  --shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(232,163,61,0.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(62,207,178,0.08), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:'Sora', sans-serif;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--accent); color:var(--bg-deep); }
+h1,h2,h3,h4{ font-family:'Fraunces', serif; margin:0; letter-spacing:-0.01em; }
+p{ margin:0; }
+a{ color:inherit; }
+button{ font-family:inherit; cursor:pointer; }
+.mono{ font-family:'IBM Plex Mono', monospace; }
+.container{ max-width:1180px; margin:0 auto; padding:0 28px; }
+@media (max-width:640px){ .container{ padding:0 18px; } }
+
+/* ---------- Compass mark (signature element) ---------- */
+.compass-mark{ width:34px; height:34px; flex:none; }
+.compass-mark .needle{ transform-origin:50% 50%; transition:transform 1.1s cubic-bezier(.16,1,.3,1); }
+
+/* ---------- Top nav ---------- */
+.topnav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(18,20,42,0.86);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topnav-inner{ display:flex; align-items:center; gap:22px; height:72px; }
+.brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-size:19px; font-weight:600; white-space:nowrap; }
+.brand small{ display:block; font-family:'Sora',sans-serif; font-weight:400; font-size:10.5px; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; }
+.navscroll{ display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; flex:1; }
+.navscroll::-webkit-scrollbar{ display:none; }
+.navlink{
+  background:none; border:none; color:var(--muted); font-size:13.5px; font-weight:500;
+  padding:9px 13px; border-radius:100px; white-space:nowrap; transition:all .18s ease;
+}
+.navlink:hover{ color:var(--text); background:var(--surface); }
+.navlink.active{ color:var(--bg-deep); background:var(--accent); }
+
+/* ---------- Layout helpers ---------- */
+.section{ padding:64px 0 78px; }
+.section.tight{ padding:40px 0 60px; }
+.eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent2); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.eyebrow::before{ content:''; width:16px; height:1px; background:var(--accent2); }
+.section-head{ max-width:680px; margin-bottom:40px; }
+.section-head h2{ font-size:clamp(28px,4vw,40px); font-weight:600; line-height:1.15; }
+.section-head p{ color:var(--muted); font-size:15.5px; margin-top:12px; line-height:1.6; }
+
+.card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); }
+.grid{ display:grid; gap:18px; }
+.grid-2{ grid-template-columns:repeat(2,1fr); }
+.grid-3{ grid-template-columns:repeat(3,1fr); }
+.grid-4{ grid-template-columns:repeat(4,1fr); }
+@media (max-width:920px){ .grid-3,.grid-4{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:620px){ .grid-2,.grid-3,.grid-4{ grid-template-columns:1fr; } }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:13px 24px; border-radius:100px; border:1px solid transparent;
+  font-size:14px; font-weight:600; transition:all .18s ease; text-decoration:none;
+}
+.btn-primary{ background:var(--accent); color:#241705; }
+.btn-primary:hover{ background:#f0ae4d; transform:translateY(-1px); }
+.btn-ghost{ background:transparent; border-color:var(--line-strong); color:var(--text); }
+.btn-ghost:hover{ border-color:var(--accent2); color:var(--accent2); }
+.btn-sm{ padding:8px 16px; font-size:12.5px; }
+.btn:disabled{ opacity:0.4; cursor:not-allowed; }
+.pill{ display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:100px; background:var(--surface2); font-size:12px; color:var(--muted); border:1px solid var(--line); }
+.tag{ font-family:'IBM Plex Mono',monospace; font-size:11px; padding:3px 9px; border-radius:6px; background:var(--surface3); color:var(--accent2); }
+
+/* ---------- Hero ---------- */
+.hero{ padding:70px 0 40px; position:relative; overflow:hidden; }
+.hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:50px; align-items:center; }
+@media (max-width:920px){ .hero-grid{ grid-template-columns:1fr; } }
+.hero h1{ font-size:clamp(36px,5.2vw,58px); line-height:1.06; font-weight:600; }
+.hero h1 em{ font-style:italic; color:var(--accent); font-weight:500; }
+.hero p.lead{ color:var(--muted); font-size:17px; line-height:1.65; margin-top:20px; max-width:520px; }
+.hero-cta{ display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
+.hero-stats{ display:flex; gap:32px; margin-top:44px; flex-wrap:wrap; }
+.hero-stat b{ font-family:'Fraunces',serif; font-size:26px; display:block; color:var(--accent); }
+.hero-stat span{ font-size:12.5px; color:var(--muted); }
+
+.compass-hero{ position:relative; aspect-ratio:1/1; max-width:400px; margin:0 auto; }
+
+.stream-strip{ display:flex; gap:14px; overflow-x:auto; padding:6px 2px 16px; margin-top:10px; }
+.stream-chip{ flex:none; width:168px; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px; transition:.2s; }
+.stream-chip:hover{ border-color:var(--accent2); transform:translateY(-3px); }
+.stream-chip .ic{ font-size:22px; }
+.stream-chip h4{ font-size:14.5px; margin-top:10px; }
+.stream-chip p{ font-size:11.5px; color:var(--muted); margin-top:6px; line-height:1.4; }
+
+/* ---------- Assessment ---------- */
+.progress-wrap{ display:flex; align-items:center; gap:16px; margin-bottom:30px; }
+.progress-track{ flex:1; height:6px; border-radius:100px; background:var(--surface2); overflow:hidden; }
+.progress-fill{ height:100%; background:linear-gradient(90deg,var(--accent2),var(--accent)); transition:width .35s ease; }
+.q-card{ padding:38px; }
+.q-index{ font-family:'IBM Plex Mono',monospace; color:var(--accent2); font-size:12.5px; margin-bottom:14px; }
+.q-text{ font-size:22px; font-weight:500; font-family:'Fraunces',serif; line-height:1.4; margin-bottom:30px; }
+.likert{ display:flex; gap:10px; flex-wrap:wrap; }
+.likert button{ flex:1; min-width:90px; padding:14px 8px; border-radius:12px; border:1px solid var(--line-strong); background:var(--surface2); color:var(--muted); font-size:12.5px; font-weight:600; text-align:center; transition:.15s; }
+.likert button:hover{ border-color:var(--accent2); color:var(--text); }
+.likert button.picked{ background:var(--accent2); border-color:var(--accent2); color:#092620; }
+.q-nav{ display:flex; justify-content:space-between; margin-top:30px; align-items:center; }
+.q-dots{ display:flex; gap:5px; flex-wrap:wrap; max-width:340px; }
+.q-dot{ width:7px; height:7px; border-radius:100px; background:var(--surface3); }
+.q-dot.done{ background:var(--accent2); }
+.q-dot.current{ background:var(--accent); width:16px; }
+
+/* ---------- Results ---------- */
+.result-hero{ background:linear-gradient(155deg,var(--surface2),var(--surface)); padding:40px; position:relative; overflow:hidden; }
+.score-ring{ width:132px; height:132px; flex:none; }
+.result-top{ display:flex; gap:30px; align-items:center; flex-wrap:wrap; }
+.holland-row{ display:flex; gap:8px; margin-top:18px; flex-wrap:wrap; }
+.holland-badge{ width:40px; height:40px; border-radius:100px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; font-size:16px; background:var(--surface3); color:var(--muted); border:2px solid transparent; }
+.holland-badge.top{ border-color:var(--accent); color:var(--accent); background:rgba(232,163,61,0.12); }
+
+.rank-row{ display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1px solid var(--line); }
+.rank-row:last-child{ border-bottom:none; }
+.rank-bar-track{ flex:1; height:8px; border-radius:100px; background:var(--surface2); overflow:hidden; }
+.rank-bar-fill{ height:100%; border-radius:100px; background:var(--muted-dim); }
+.rank-row.top .rank-bar-fill{ background:linear-gradient(90deg,var(--accent2),var(--accent)); }
+
+.detail-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:26px; }
+@media (max-width:760px){ .detail-grid{ grid-template-columns:1fr; } }
+.detail-box h4{ font-size:13px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent2); margin-bottom:12px; font-family:'IBM Plex Mono',monospace; font-weight:500; }
+.chip-list{ display:flex; flex-wrap:wrap; gap:8px; }
+.chip{ padding:7px 13px; border-radius:100px; background:var(--surface2); font-size:12.5px; border:1px solid var(--line); }
+ul.plain{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
+ul.plain li{ font-size:13.5px; color:var(--muted); padding-left:18px; position:relative; line-height:1.5; }
+ul.plain li::before{ content:'—'; position:absolute; left:0; color:var(--accent2); }
+
+/* radar */
+.radar-wrap{ display:flex; gap:28px; flex-wrap:wrap; align-items:center; }
+.radar-legend{ display:flex; flex-direction:column; gap:8px; font-size:12.5px; }
+.radar-legend .row{ display:flex; justify-content:space-between; gap:20px; min-width:220px; }
+.radar-legend .row span:first-child{ color:var(--muted); }
+.radar-legend .row span:last-child{ font-family:'IBM Plex Mono',monospace; color:var(--accent); }
+
+/* ---------- Career explorer ---------- */
+.career-card{ padding:22px; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:.2s; }
+.career-card:hover{ border-color:var(--accent2); transform:translateY(-3px); }
+.career-card h3{ font-size:17px; }
+.career-card .meta{ display:flex; gap:8px; flex-wrap:wrap; }
+.career-card p.desc{ color:var(--muted); font-size:13px; line-height:1.55; }
+.bookmark-btn{ margin-left:auto; background:none; border:none; color:var(--muted); font-size:17px; }
+.bookmark-btn.on{ color:var(--accent); }
+.filter-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:26px; }
+.filter-chip{ padding:8px 15px; border-radius:100px; background:var(--surface); border:1px solid var(--line); font-size:12.5px; color:var(--muted); }
+.filter-chip.active{ background:var(--accent2); color:#062420; border-color:var(--accent2); }
+
+/* modal */
+.modal-back{ position:fixed; inset:0; background:rgba(6,7,18,0.72); backdrop-filter:blur(4px); z-index:100; display:flex; align-items:center; justify-content:center; padding:20px; }
+.modal{ background:var(--surface); border:1px solid var(--line-strong); border-radius:22px; max-width:640px; width:100%; max-height:86vh; overflow-y:auto; padding:36px; position:relative; }
+.modal-close{ position:absolute; top:20px; right:20px; background:var(--surface2); border:none; color:var(--text); width:34px; height:34px; border-radius:100px; font-size:16px; }
+
+/* ---------- Streams accordion ---------- */
+.acc-item{ border:1px solid var(--line); border-radius:16px; margin-bottom:12px; overflow:hidden; background:var(--surface); }
+.acc-head{ display:flex; align-items:center; justify-content:space-between; padding:20px 24px; background:none; border:none; width:100%; text-align:left; color:var(--text); }
+.acc-head h3{ font-size:17px; }
+.acc-head .sub{ font-size:12.5px; color:var(--muted); margin-top:4px; font-weight:400; font-family:'Sora',sans-serif; }
+.acc-chevron{ transition:transform .25s ease; color:var(--accent2); font-size:18px; }
+.acc-item.open .acc-chevron{ transform:rotate(45deg); }
+.acc-body{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+.acc-item.open .acc-body{ max-height:900px; }
+.acc-body-inner{ padding:0 24px 26px; display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+@media (max-width:700px){ .acc-body-inner{ grid-template-columns:1fr; } }
+
+/* ---------- College finder ---------- */
+.college-row{ display:grid; grid-template-columns:1.6fr 1fr 0.8fr 0.8fr 0.7fr; gap:14px; align-items:center; padding:16px 22px; border-bottom:1px solid var(--line); font-size:13.5px; }
+.college-row.head{ color:var(--muted); font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; }
+@media (max-width:800px){ .college-row{ grid-template-columns:1fr; gap:4px; padding:16px; } .college-row.head{ display:none; } }
+
+/* ---------- Roadmaps ---------- */
+.roadmap-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:30px; }
+.trail{ position:relative; padding-left:34px; }
+.trail::before{ content:''; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:repeating-linear-gradient(to bottom, var(--accent2) 0 6px, transparent 6px 12px); }
+.trail-node{ position:relative; margin-bottom:26px; }
+.trail-node::before{ content:''; position:absolute; left:-34px; top:2px; width:20px; height:20px; border-radius:100px; background:var(--bg); border:3px solid var(--accent2); }
+.trail-node.final::before{ background:var(--accent); border-color:var(--accent); }
+.trail-node h4{ font-size:15.5px; }
+.trail-node p{ color:var(--muted); font-size:12.5px; margin-top:4px; }
+
+/* ---------- Scholarships / blogs ---------- */
+.res-card{ padding:22px; }
+.res-card .tag{ margin-bottom:12px; display:inline-block; }
+.res-card h3{ font-size:16px; margin-bottom:8px; }
+.res-card p{ color:var(--muted); font-size:13px; line-height:1.55; }
+.res-card .footline{ margin-top:14px; display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted-dim); }
+
+/* ---------- Chatbot ---------- */
+.chat-shell{ display:grid; grid-template-columns:280px 1fr; gap:0; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; height:560px; }
+@media (max-width:760px){ .chat-shell{ grid-template-columns:1fr; height:auto; } }
+.chat-side{ background:var(--surface2); padding:22px; border-right:1px solid var(--line); overflow-y:auto; }
+.chat-side h4{ font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:14px; font-family:'IBM Plex Mono',monospace; }
+.chat-suggest{ display:block; width:100%; text-align:left; background:none; border:1px solid var(--line); color:var(--muted); padding:10px 12px; border-radius:10px; font-size:12.5px; margin-bottom:8px; line-height:1.4; }
+.chat-suggest:hover{ border-color:var(--accent2); color:var(--text); }
+.chat-main{ display:flex; flex-direction:column; background:var(--bg-deep); }
+.chat-log{ flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:14px; }
+.msg{ max-width:78%; padding:13px 16px; border-radius:16px; font-size:13.5px; line-height:1.55; }
+.msg.bot{ background:var(--surface); align-self:flex-start; border-bottom-left-radius:4px; }
+.msg.user{ background:var(--accent2); color:#052420; align-self:flex-end; border-bottom-right-radius:4px; font-weight:500; }
+.chat-input-row{ display:flex; gap:10px; padding:16px; border-top:1px solid var(--line); }
+.chat-input-row input{ flex:1; background:var(--surface); border:1px solid var(--line-strong); border-radius:100px; padding:12px 18px; color:var(--text); font-size:13.5px; }
+.chat-input-row input:focus{ outline:none; border-color:var(--accent2); }
+
+/* ---------- Dashboard ---------- */
+.dash-stat{ padding:24px; }
+.dash-stat .big{ font-family:'Fraunces',serif; font-size:32px; color:var(--accent); }
+.dash-stat .lbl{ font-size:12.5px; color:var(--muted); margin-top:6px; }
+.empty-state{ text-align:center; padding:50px 20px; color:var(--muted); }
+.empty-state .ic{ font-size:34px; margin-bottom:14px; }
+
+/* ---------- Contact ---------- */
+.form-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.form-row label{ font-size:12.5px; color:var(--muted); font-family:'IBM Plex Mono',monospace; }
+.form-row input, .form-row textarea, .form-row select{ background:var(--surface2); border:1px solid var(--line-strong); border-radius:10px; padding:13px 15px; color:var(--text); font-size:14px; font-family:inherit; }
+.form-row input:focus, .form-row textarea:focus, .form-row select:focus{ outline:none; border-color:var(--accent2); }
+.form-row textarea{ resize:vertical; min-height:110px; }
+
+/* ---------- Footer ---------- */
+footer{ border-top:1px solid var(--line); padding:40px 0; margin-top:40px; }
+.foot-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+.foot-links{ display:flex; gap:20px; font-size:13px; color:var(--muted); }
+
+/* ---------- toast ---------- */
+#toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(120%); background:var(--accent2); color:#052420; padding:13px 22px; border-radius:100px; font-size:13.5px; font-weight:600; z-index:200; transition:transform .3s cubic-bezier(.16,1,.3,1); box-shadow:var(--shadow); }
+#toast.show{ transform:translateX(-50%) translateY(0); }
+
+/* dark/light toggle */
+body.light{
+  --bg:#F6F4EE; --bg-deep:#EFEBE0; --surface:#FFFFFF; --surface2:#F1EEE4; --surface3:#E7E2D3;
+  --text:#211E14; --muted:#6B6656; --muted-dim:#9A947F; --line:rgba(33,30,20,0.10); --line-strong:rgba(33,30,20,0.18);
+}
+body.light .msg.bot{ background:#EFEBE0; }
+.mode-toggle{ background:var(--surface2); border:1px solid var(--line-strong); border-radius:100px; width:42px; height:42px; display:flex; align-items:center; justify-content:center; font-size:17px; flex:none; }
+
+.hide{ display:none !important; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="container topnav-inner">
+    <div class="brand">
+      <svg class="compass-mark" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="var(--accent2)" stroke-width="1.5"/><g class="needle" id="navNeedle"><polygon points="20,7 23,20 20,33 17,20" fill="var(--accent)"/></g><circle cx="20" cy="20" r="2.5" fill="var(--text)"/></svg>
+      <div>Career Compass AI<small>Guidance after 10th grade</small></div>
+    </div>
+    <div class="navscroll" id="navScroll"></div>
+    <button class="mode-toggle" id="modeToggle" title="Toggle dark/light">🌙</button>
+  </div>
+</nav>
+
+<main id="app"></main>
+
+<footer>
+  <div class="container foot-row">
+    <div class="brand" style="font-size:15px;">
+      <svg class="compass-mark" style="width:24px;height:24px" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="var(--accent2)" stroke-width="1.5"/><polygon points="20,7 23,20 20,33 17,20" fill="var(--accent)"/></svg>
+      Career Compass AI
+    </div>
+    <div class="foot-links">
+      <span>Built for students &amp; parents</span>
+      <span>·</span>
+      <span>Every recommendation is explainable, not a black box</span>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+/* =========================================================
+   DATA LAYER
+   ========================================================= */
+
+const SECTIONS = [
+  {id:'home', label:'Home'},
+  {id:'assessment', label:'Career Assessment'},
+  {id:'results', label:'AI Recommendation'},
+  {id:'skills', label:'Skill Analyzer'},
+  {id:'explorer', label:'Career Explorer'},
+  {id:'streams', label:'Streams Guide'},
+  {id:'colleges', label:'College Finder'},
+  {id:'roadmaps', label:'Roadmaps'},
+  {id:'scholarships', label:'Scholarships'},
+  {id:'blog', label:'Blogs & Resources'},
+  {id:'chatbot', label:'AI Chatbot'},
+  {id:'dashboard', label:'Dashboard'},
+  {id:'contact', label:'Contact'},
+];
+
+// 20 trait dimensions scored 0-100 from the assessment
+const TRAIT_LABELS = {
+  logical:'Logical Reasoning', numerical:'Numerical Ability', communication:'Communication',
+  creativity:'Creativity', scientific:'Scientific Thinking', biology:'Biology Interest',
+  tech:'Technology Interest', business:'Business Interest', design:'Design Sense',
+  helping:'Helping People', practical:'Practical / Hands-on', teamwork:'Teamwork',
+  leadership:'Leadership', risk:'Risk Appetite', patience:'Patience', detail:'Attention to Detail',
+  stress:'Stress Handling', outdoor:'Outdoor Preference', emotional:'Emotional Intelligence',
+  observation:'Observation'
+};
+
+// 30 assessment questions. tags: trait -> weight
+const QUESTIONS = [
+  {id:1, text:"I enjoy solving mathematical problems and puzzles.", tags:{logical:1, numerical:1}},
+  {id:2, text:"I like understanding how machines, gadgets or software work.", tags:{tech:1}},
+  {id:3, text:"I'm fascinated by how the human body and living things function.", tags:{biology:1, scientific:1}},
+  {id:4, text:"I enjoy leading a group project and assigning tasks to others.", tags:{leadership:1}},
+  {id:5, text:"I find it easy to persuade others to see my point of view.", tags:{business:1, leadership:1}},
+  {id:6, text:"I love drawing, designing, or creating visual content.", tags:{creativity:1, design:1}},
+  {id:7, text:"I enjoy writing stories, essays, or expressing ideas in words.", tags:{communication:1}},
+  {id:8, text:"I like helping friends or family work through their personal problems.", tags:{helping:1, emotional:1}},
+  {id:9, text:"I prefer working with my hands — building, fixing, or assembling things.", tags:{practical:1}},
+  {id:10, text:"I enjoy working outdoors rather than being confined indoors all day.", tags:{outdoor:1}},
+  {id:11, text:"I like taking calculated risks to achieve bigger rewards.", tags:{risk:1}},
+  {id:12, text:"I stay patient even when a task takes a long time to finish.", tags:{patience:1}},
+  {id:13, text:"I pay close attention to small details and rarely miss errors.", tags:{detail:1}},
+  {id:14, text:"I remain calm and composed under pressure or tight deadlines.", tags:{stress:1}},
+  {id:15, text:"I enjoy working as part of a team more than working alone.", tags:{teamwork:1}},
+  {id:16, text:"I notice patterns or small changes that others often miss.", tags:{observation:1}},
+  {id:17, text:"I'm curious about scientific experiments and discovering how things work.", tags:{scientific:1}},
+  {id:18, text:"I enjoy managing money, budgets, or business plans.", tags:{business:1}},
+  {id:19, text:"I like reading and discussing current affairs, history or society.", tags:{communication:1}},
+  {id:20, text:"I can recall detailed information accurately after studying it once.", tags:{detail:1}},
+  {id:21, text:"I like experimenting with new technology, apps or code.", tags:{tech:1}},
+  {id:22, text:"I feel fulfilled when I care for sick people, animals or plants.", tags:{biology:1, helping:1}},
+  {id:23, text:"I enjoy public speaking or presenting in front of an audience.", tags:{communication:1, leadership:1}},
+  {id:24, text:"I like keeping my study material, schedule and tasks neatly organised.", tags:{detail:1}},
+  {id:25, text:"I enjoy imagining designs, stories or ideas nobody has made before.", tags:{creativity:1}},
+  {id:26, text:"I like understanding cause-and-effect relationships in nature or numbers.", tags:{logical:1, scientific:1}},
+  {id:27, text:"I would enjoy starting and running my own business someday.", tags:{business:1, risk:1}},
+  {id:28, text:"I adapt quickly and stay steady in unpredictable situations.", tags:{stress:1, teamwork:1}},
+  {id:29, text:"I like precise, hands-on technical work such as wiring, repairing or mechanics.", tags:{practical:1, tech:1}},
+  {id:30, text:"I care about contributing to my community or society through my work.", tags:{helping:1}},
+];
+
+// Educational pathways knowledge base
+const STREAMS = {
+  mpc:{ id:'mpc', name:'MPC — Mathematics, Physics, Chemistry', icon:'∑',
+    subjects:['Mathematics','Physics','Chemistry'],
+    suitableFor:'Students who enjoy mathematics, logical reasoning, engineering, coding and technology.',
+    careers:['Software Engineer','AI Engineer','Data Scientist','Civil Engineer','Mechanical Engineer','Electrical Engineer','Aerospace Engineer','Architect','Pilot','Defense Services','Research Scientist'],
+    skills:['Logical reasoning','Mathematical aptitude','Analytical thinking','Problem-solving','Curiosity'],
+    exams:['JEE Main / Advanced','BITSAT','State Engineering CETs','NDA (for defense)'],
+    colleges:['IITs & NITs','State Engineering Colleges','BITS Pilani','IIITs'],
+    weights:{logical:.22, numerical:.22, scientific:.18, tech:.18, creativity:.10, detail:.10},
+    demand:'Very High', salary:'₹4L–₹40L+ per annum (role & experience dependent)'
+  },
+  bipc:{ id:'bipc', name:'BiPC — Biology, Physics, Chemistry', icon:'⚕',
+    subjects:['Biology','Physics','Chemistry'],
+    suitableFor:'Students passionate about medicine, biology, healthcare and life sciences.',
+    careers:['Doctor','Dentist','Pharmacist','Veterinary Doctor','Biotechnologist','Agriculture Scientist','Nurse','Physiotherapist'],
+    skills:['Observation','Memory','Patience','Empathy','Analytical thinking'],
+    exams:['NEET-UG','State Medical / Agriculture CETs'],
+    colleges:['Government Medical Colleges','AIIMS institutes','Veterinary & Agriculture Universities'],
+    weights:{biology:.35, scientific:.25, observation:.15, patience:.15, detail:.10},
+    demand:'High', salary:'₹3L–₹25L+ per annum (varies widely by specialisation)'
+  },
+  commerce:{ id:'commerce', name:'MEC / CEC — Commerce', icon:'₹',
+    subjects:['Accountancy','Business Studies','Economics','Mathematics or Civics'],
+    suitableFor:'Students interested in finance, economics, management, business and entrepreneurship.',
+    careers:['Chartered Accountant','Company Secretary','Investment Banker','Financial Analyst','Auditor','Entrepreneur','Business Manager'],
+    skills:['Business thinking','Numerical ability','Analytical thinking','Attention to detail'],
+    exams:['CA Foundation','CUET','CS Foundation (ICSI)','CMA Foundation'],
+    colleges:['SRCC & top commerce colleges','Christ University','NMIMS','State Commerce Colleges'],
+    weights:{business:.32, numerical:.22, detail:.16, leadership:.15, risk:.15},
+    demand:'High', salary:'₹3.5L–₹30L+ per annum'
+  },
+  humanities:{ id:'humanities', name:'HEC / Arts & Humanities', icon:'⚖',
+    subjects:['History','Economics','Civics','Political Science','Psychology','Sociology'],
+    suitableFor:'Students interested in law, public service, journalism, education and social sciences.',
+    careers:['Lawyer','Judge','Journalist','Civil Servant (IAS/IPS/IFS)','Teacher','Psychologist','Social Worker','Political Analyst'],
+    skills:['Communication','Writing','Empathy','Critical thinking','Research'],
+    exams:['CUET','CLAT (Law)','UPSC (later, after graduation)'],
+    colleges:['National Law Universities','Central Universities','Lady Shri Ram / Hindu College','State Arts Colleges'],
+    weights:{communication:.30, helping:.20, creativity:.15, detail:.15, emotional:.20},
+    demand:'Moderate–High', salary:'₹3L–₹25L+ per annum'
+  },
+  polytechnic:{ id:'polytechnic', name:'Polytechnic Diploma', icon:'⚙',
+    subjects:['Computer Science','Mechanical','Civil','Electrical','Electronics','Automobile'],
+    suitableFor:'Students who want hands-on technical training and an early entry into engineering fields.',
+    careers:['Junior Engineer','Technical Supervisor','CAD Designer','Lateral Entry to B.Tech'],
+    skills:['Technical aptitude','Practical intelligence','Troubleshooting','Spatial reasoning'],
+    exams:['State Polytechnic CET','JEE (for later lateral entry)'],
+    colleges:['Government Polytechnics','State Technical Boards'],
+    weights:{practical:.35, tech:.30, logical:.20, detail:.15},
+    demand:'Moderate', salary:'₹2L–₹8L per annum (higher after lateral B.Tech)'
+  },
+  iti:{ id:'iti', name:'ITI — Industrial Training', icon:'🔧',
+    subjects:['Electrician','Fitter','Welder','COPA','Mechanic','Plumbing'],
+    suitableFor:'Students who prefer trade skills and want to enter the workforce quickly.',
+    careers:['Technician','Electrician','Mechanic','Workshop Supervisor','Self-employed Professional'],
+    skills:['Manual dexterity','Discipline','Practical skills','Teamwork'],
+    exams:['State ITI Admission Test'],
+    colleges:['Government ITIs','Private ITIs (NCVT/SCVT affiliated)'],
+    weights:{practical:.45, teamwork:.20, detail:.15, stress:.20},
+    demand:'Moderate', salary:'₹1.5L–₹5L per annum'
+  },
+  paramedical:{ id:'paramedical', name:'Paramedical Sciences', icon:'🩺',
+    subjects:['DMLT','Radiology','Dialysis','Ophthalmic Technology'],
+    suitableFor:'Students who want a healthcare career without the full MBBS/BDS route.',
+    careers:['Lab Technician','Radiology Technician','Medical Assistant','Dialysis Technician'],
+    skills:['Precision','Observation','Scientific understanding','Emotional resilience'],
+    exams:['Paramedical CET','NEET (for some specialised courses)'],
+    colleges:['Government Paramedical Institutes','Medical College affiliated programs'],
+    weights:{detail:.25, observation:.25, scientific:.20, patience:.15, emotional:.15},
+    demand:'High', salary:'₹2L–₹7L per annum'
+  },
+  creative:{ id:'creative', name:'Creative & Vocational', icon:'🎨',
+    subjects:['Graphic Design','UI/UX Design','Fashion Design','Interior Design','Animation','Hotel Management','Digital Marketing'],
+    suitableFor:'Students who think visually and enjoy building, styling or communicating experiences.',
+    careers:['Graphic Designer','UI/UX Designer','Fashion Designer','Animator','Hotel Manager','Chef','Digital Marketer'],
+    skills:['Creativity','Communication','Design thinking','Technology skills'],
+    exams:['NID DAT','NIFT Entrance','UCEED'],
+    colleges:['NID','NIFT','Institutes of Hotel Management'],
+    weights:{creativity:.35, design:.30, communication:.20, tech:.15},
+    demand:'High (fast-growing)', salary:'₹3L–₹20L+ per annum'
+  },
+  maritime:{ id:'maritime', name:'Maritime Studies', icon:'⚓',
+    subjects:['GP Rating','Marine Engineering Basics'],
+    suitableFor:'Students drawn to travel, discipline and life at sea.',
+    careers:['Deck Rating','Engine Rating','Merchant Navy Crew','Marine Engineer (with further study)'],
+    skills:['Physical endurance','Teamwork','Adaptability','Discipline'],
+    exams:['IMU-CET'],
+    colleges:['Indian Maritime University & affiliated academies'],
+    weights:{outdoor:.30, teamwork:.25, stress:.25, risk:.20},
+    demand:'Moderate', salary:'₹3L–₹18L+ per annum (rises fast with sea rank)'
+  },
+};
+
+// Career Explorer profiles (curated subset of the larger list)
+const CAREERS = [
+  {id:'sw-eng', name:'Software Engineer', stream:'mpc', category:'Technology', desc:'Designs, builds and maintains applications and systems software.', skills:['Programming','Problem-solving','Logical reasoning'], edu:'B.Tech/BCA in Computer Science', salary:'₹5L–₹40L+', demand:'Very High'},
+  {id:'ai-eng', name:'AI Engineer', stream:'mpc', category:'Technology', desc:'Builds machine learning models and AI-driven products.', skills:['Python','Statistics','ML fundamentals'], edu:'B.Tech + ML specialisation', salary:'₹6L–₹45L+', demand:'Very High'},
+  {id:'ml-eng', name:'Machine Learning Engineer', stream:'mpc', category:'Technology', desc:'Deploys and scales ML systems in production.', skills:['Coding','Data pipelines','Math for ML'], edu:'B.Tech/M.Tech in CS or allied field', salary:'₹6L–₹42L+', demand:'Very High'},
+  {id:'data-sci', name:'Data Scientist', stream:'mpc', category:'Technology', desc:'Extracts insight from data to guide business decisions.', skills:['Statistics','Python/R','Communication'], edu:'B.Tech/B.Sc + Data Science specialisation', salary:'₹5L–₹35L+', demand:'Very High'},
+  {id:'cyber', name:'Cybersecurity Analyst', stream:'mpc', category:'Technology', desc:'Protects systems and networks from digital threats.', skills:['Networking','Security tools','Attention to detail'], edu:'B.Tech/BCA + security certifications', salary:'₹5L–₹28L+', demand:'Very High'},
+  {id:'cloud', name:'Cloud Engineer', stream:'mpc', category:'Technology', desc:'Builds and manages cloud infrastructure for organisations.', skills:['Cloud platforms','DevOps','Scripting'], edu:'B.Tech + cloud certifications', salary:'₹5L–₹32L+', demand:'Very High'},
+  {id:'doctor', name:'Doctor (MBBS)', stream:'bipc', category:'Healthcare', desc:'Diagnoses and treats patients across specialisations.', skills:['Observation','Empathy','Scientific knowledge'], edu:'MBBS + optional MD/MS', salary:'₹6L–₹35L+', demand:'High'},
+  {id:'dentist', name:'Dentist', stream:'bipc', category:'Healthcare', desc:'Treats dental and oral health conditions.', skills:['Precision','Patience','Manual dexterity'], edu:'BDS + optional MDS', salary:'₹4L–₹20L+', demand:'High'},
+  {id:'nurse', name:'Nurse', stream:'bipc', category:'Healthcare', desc:'Provides patient care and supports medical teams.', skills:['Empathy','Stamina','Attention to detail'], edu:'B.Sc Nursing / GNM', salary:'₹2.5L–₹10L+', demand:'Very High'},
+  {id:'vet', name:'Veterinarian', stream:'bipc', category:'Healthcare', desc:'Treats and cares for animals.', skills:['Observation','Compassion','Scientific knowledge'], edu:'B.V.Sc & A.H.', salary:'₹3L–₹15L+', demand:'Moderate'},
+  {id:'lawyer', name:'Lawyer', stream:'humanities', category:'Law & Public Service', desc:'Advises and represents clients on legal matters.', skills:['Argumentation','Research','Writing'], edu:'BA LLB / LLB', salary:'₹3L–₹40L+', demand:'High'},
+  {id:'judge', name:'Judge', stream:'humanities', category:'Law & Public Service', desc:'Presides over court proceedings and delivers judgments.', skills:['Legal reasoning','Impartiality','Communication'], edu:'Law degree + Judiciary exam', salary:'Government pay scale', demand:'Moderate'},
+  {id:'ca', name:'Chartered Accountant', stream:'commerce', category:'Finance', desc:'Manages accounts, audits and financial strategy.', skills:['Numerical ability','Detail orientation','Ethics'], edu:'CA (ICAI) after Class 12', salary:'₹6L–₹35L+', demand:'High'},
+  {id:'cs', name:'Company Secretary', stream:'commerce', category:'Finance', desc:'Ensures legal and regulatory compliance for companies.', skills:['Corporate law','Organisation','Communication'], edu:'CS (ICSI) after Class 12', salary:'₹4L–₹22L+', demand:'Moderate'},
+  {id:'ibank', name:'Investment Banker', stream:'commerce', category:'Finance', desc:'Advises on mergers, capital raising and investments.', skills:['Financial modelling','Negotiation','Stamina'], edu:'B.Com/BBA + MBA (Finance)', salary:'₹8L–₹60L+', demand:'Moderate–High'},
+  {id:'teacher', name:'Teacher / Professor', stream:'humanities', category:'Education', desc:'Educates and mentors students at school or college level.', skills:['Communication','Patience','Subject mastery'], edu:'B.Ed / M.A. + Ph.D (for professors)', salary:'₹2.5L–₹18L+', demand:'High'},
+  {id:'architect', name:'Architect', stream:'mpc', category:'Engineering & Design', desc:'Designs buildings and spaces balancing form and function.', skills:['Spatial reasoning','Creativity','Technical drawing'], edu:'B.Arch (via NATA/JEE)', salary:'₹4L–₹25L+', demand:'Moderate–High'},
+  {id:'civil-eng', name:'Civil Engineer', stream:'mpc', category:'Engineering & Design', desc:'Plans and builds infrastructure like roads, bridges and buildings.', skills:['Mathematics','Project management','Practical skills'], edu:'B.Tech Civil Engineering', salary:'₹4L–₹22L+', demand:'High'},
+  {id:'mech-eng', name:'Mechanical Engineer', stream:'mpc', category:'Engineering & Design', desc:'Designs and maintains mechanical systems and machines.', skills:['Physics','CAD tools','Problem-solving'], edu:'B.Tech Mechanical Engineering', salary:'₹4L–₹24L+', demand:'High'},
+  {id:'pilot', name:'Commercial Pilot', stream:'mpc', category:'Aviation & Defense', desc:'Flies commercial aircraft carrying passengers or cargo.', skills:['Focus','Quick decision-making','Stress handling'], edu:'Class 12 (PCM) + CPL training', salary:'₹8L–₹80L+', demand:'Moderate–High'},
+  {id:'navy-off', name:'Merchant Navy Officer', stream:'maritime', category:'Aviation & Defense', desc:'Manages operations aboard commercial ships.', skills:['Discipline','Teamwork','Navigation'], edu:'B.Sc Nautical Science / Marine Engineering', salary:'₹6L–₹40L+ (rises with rank)', demand:'Moderate'},
+  {id:'ui-ux', name:'UI/UX Designer', stream:'creative', category:'Design & Media', desc:'Designs digital product experiences that are usable and delightful.', skills:['Design thinking','Prototyping tools','Empathy'], edu:'B.Des / UI-UX bootcamp', salary:'₹4L–₹25L+', demand:'Very High'},
+  {id:'graphic', name:'Graphic Designer', stream:'creative', category:'Design & Media', desc:'Creates visual content for brands and media.', skills:['Visual design','Software tools','Creativity'], edu:'B.Des / Diploma in Graphic Design', salary:'₹2.5L–₹15L+', demand:'High'},
+  {id:'fashion', name:'Fashion Designer', stream:'creative', category:'Design & Media', desc:'Designs clothing and accessories collections.', skills:['Creativity','Trend awareness','Sketching'], edu:'B.Des (Fashion) via NIFT', salary:'₹3L–₹20L+', demand:'Moderate'},
+  {id:'animator', name:'Animator / Game Developer', stream:'creative', category:'Design & Media', desc:'Creates animated content or interactive games.', skills:['Software tools','Storytelling','Creativity'], edu:'B.Des/B.Sc Animation, Game Dev courses', salary:'₹3L–₹22L+', demand:'High'},
+  {id:'chef', name:'Chef / Hotel Manager', stream:'creative', category:'Hospitality', desc:'Manages culinary operations or hotel guest experience.', skills:['Creativity','Organisation','People skills'], edu:'Hotel Management Diploma/Degree', salary:'₹2.5L–₹18L+', demand:'High'},
+  {id:'dig-mkt', name:'Digital Marketer', stream:'creative', category:'Design & Media', desc:'Plans and runs online marketing and brand campaigns.', skills:['Analytics','Content strategy','Creativity'], edu:'BBA/Any degree + digital marketing certification', salary:'₹3L–₹20L+', demand:'Very High'},
+  {id:'ias', name:'IAS / IPS / Civil Services Officer', stream:'humanities', category:'Law & Public Service', desc:'Administers government policy and public services.', skills:['Leadership','General awareness','Decision-making'], edu:'Any graduation + UPSC Civil Services Exam', salary:'Government pay scale', demand:'Moderate'},
+  {id:'army', name:'Armed Forces Officer', stream:'mpc', category:'Aviation & Defense', desc:'Leads and serves in the Army, Navy or Air Force.', skills:['Leadership','Discipline','Physical fitness'], edu:'NDA/CDS after Class 12 or graduation', salary:'Government pay scale + allowances', demand:'Moderate'},
+  {id:'entre', name:'Entrepreneur', stream:'commerce', category:'Finance', desc:'Builds and runs an original business venture.', skills:['Risk-taking','Leadership','Resourcefulness'], edu:'Any stream — practical experience matters most', salary:'Variable / unlimited upside', demand:'High (self-driven)'},
+  {id:'psych', name:'Psychologist', stream:'humanities', category:'Education', desc:'Studies behaviour and supports mental wellbeing.', skills:['Empathy','Active listening','Research'], edu:'B.A./B.Sc Psychology + M.A./M.Phil', salary:'₹3L–₹18L+', demand:'High (growing awareness)'},
+  {id:'biotech', name:'Biotechnologist', stream:'bipc', category:'Healthcare', desc:'Applies biology to develop products in medicine, agriculture and industry.', skills:['Lab skills','Scientific thinking','Research'], edu:'B.Sc/B.Tech Biotechnology', salary:'₹3L–₹18L+', demand:'Moderate–High'},
+];
+
+const CAREER_CATEGORIES = ['All', ...new Set(CAREERS.map(c=>c.category))];
+
+// Skill gap templates keyed by career id
+const SKILL_GAPS = {
+  'ai-eng':{ current:['Logical reasoning','Basic mathematics'], missing:['Python programming','Statistics & probability','Machine learning fundamentals','Data structures'], resources:['NPTEL: Python for Data Science','Kaggle Learn micro-courses','Andrew Ng — Machine Learning Specialisation'], certs:['Google Data Analytics Certificate','DeepLearning.AI TensorFlow Developer'], projects:['Build a spam classifier','Predict house prices with regression','Image classifier with CNNs'], timeline:'18–24 months alongside coursework' },
+  'doctor':{ current:['Observation','Biology fundamentals'], missing:['NEET-level Physics/Chemistry/Biology depth','Time-bound test-taking stamina','Clinical exposure'], resources:['NCERT Biology/Physics/Chemistry (11th-12th)','NEET coaching test series'], certs:['—'], projects:['Volunteer at a local clinic or health camp'], timeline:'2 years (11th–12th) + NEET prep' },
+  'ca':{ current:['Numerical ability','Basic accounting concepts'], missing:['Advanced accountancy','Taxation law','Auditing standards','Cost management'], resources:['ICAI study material','CA Foundation video lectures'], certs:['CA Foundation → Intermediate → Final'], projects:['Maintain small-business mock ledgers','Practice GST return filing simulations'], timeline:'4–5 years end-to-end' },
+  'ui-ux':{ current:['Creativity','Visual sense'], missing:['Figma/Adobe XD proficiency','User research methods','Prototyping & usability testing'], resources:['Google UX Design Certificate','Figma official tutorials'], certs:['Google UX Design Professional Certificate'], projects:['Redesign a local app you use daily','Conduct 5 user interviews for a mock product'], timeline:'6–12 months to portfolio-ready' },
+  'lawyer':{ current:['Communication','Reading comprehension'], missing:['Legal reasoning','Constitutional knowledge','Argumentation under CLAT format'], resources:['CLAT prep books','Moot court practice sessions'], certs:['—'], projects:['Join a school debate/MUN circuit'], timeline:'2 years prep + 5-year integrated law degree' },
+};
+
+const DEFAULT_SKILL_GAP = { current:['Foundational subject knowledge'], missing:['Domain-specific technical skills','Portfolio / practical exposure','Industry-recognised certification'], resources:['NPTEL / SWAYAM free courses','YouTube subject playlists from certified institutions'], certs:['Relevant entry-level certification for the chosen field'], projects:['A small personal project applying the core skill'], timeline:'6–18 months depending on depth required' };
+
+// Roadmaps for representative careers
+const ROADMAPS = {
+  'AI Engineer':['10th Grade','Choose MPC stream','Intermediate / Class 12 (Maths & CS)','B.Tech Computer Science / IT','Learn Python & Data Structures','Machine Learning fundamentals','Internship in AI/ML team','AI Engineer'],
+  'Doctor':['10th Grade','Choose BiPC stream','Intermediate / Class 12 (Bio, Phy, Chem)','Crack NEET-UG','MBBS (5.5 years incl. internship)','Optional MD/MS specialisation','Practicing Doctor'],
+  'Chartered Accountant':['10th Grade','Choose Commerce (MEC/CEC)','Register for CA Foundation','Clear Foundation → Intermediate','Article-ship (practical training)','Clear CA Final','Chartered Accountant'],
+  'Lawyer':['10th Grade','Choose Humanities or Commerce','Prepare for CLAT','5-year integrated law degree (BA LLB)','Internships with law firms/chambers','Enrol with Bar Council','Practicing Lawyer'],
+  'UI/UX Designer':['10th Grade','Choose Creative & Vocational stream','Class 12 (any stream)','B.Des or UX bootcamp','Build a design portfolio','Internship at a product/design studio','UI/UX Designer'],
+  'Merchant Navy Officer':['10th Grade','Choose MPC stream','Intermediate / Class 12 (PCM)','Clear IMU-CET','B.Sc Nautical Science / Marine Engineering','Sea-time training & certification','Merchant Navy Officer'],
+};
+
+// Colleges sample dataset
+const COLLEGES = [
+  {name:'Indian Institute of Technology (IITs)', state:'Multiple States', course:'Engineering', fees:'₹8L–₹10L (4 yrs)', type:'Government', placements:'Excellent', ranking:'#1–16 (NIRF Engineering)'},
+  {name:'National Institutes of Technology (NITs)', state:'Multiple States', course:'Engineering', fees:'₹5L–₹7L (4 yrs)', type:'Government', placements:'Excellent', ranking:'Top 30 (NIRF)'},
+  {name:'AIIMS (All India Institutes of Medical Sciences)', state:'Multiple States', course:'Medicine', fees:'₹5K–₹50K/yr', type:'Government', placements:'Excellent', ranking:'#1 (NIRF Medical)'},
+  {name:'Shri Ram College of Commerce (SRCC)', state:'Delhi', course:'Commerce', fees:'₹30K–₹50K/yr', type:'Government-aided', placements:'Excellent', ranking:'Top Commerce College'},
+  {name:'National Law School of India University', state:'Karnataka', course:'Law', fees:'₹2.5L–₹3L/yr', type:'Government', placements:'Excellent', ranking:'#1 (NIRF Law)'},
+  {name:'National Institute of Design (NID)', state:'Gujarat', course:'Design', fees:'₹4L–₹5L (4 yrs)', type:'Government', placements:'Very Good', ranking:'#1 Design Institute'},
+  {name:'NIFT (National Institute of Fashion Technology)', state:'Multiple States', course:'Fashion Design', fees:'₹2L–₹3L/yr', type:'Government', placements:'Good', ranking:'Top Fashion Institute'},
+  {name:'Indian Maritime University', state:'Tamil Nadu', course:'Maritime Studies', fees:'₹3L–₹5L/yr', type:'Government', placements:'Very Good', ranking:'Top Maritime Institute'},
+  {name:'Government Polytechnic Colleges', state:'Multiple States', course:'Diploma', fees:'₹10K–₹40K/yr', type:'Government', placements:'Moderate', ranking:'State ranked'},
+  {name:'Christ University', state:'Karnataka', course:'Commerce / Humanities', fees:'₹1.5L–₹3L/yr', type:'Private/Autonomous', placements:'Very Good', ranking:'Top Private University'},
+  {name:'NMIMS', state:'Maharashtra', course:'Commerce / Management', fees:'₹3L–₹5L/yr', type:'Private', placements:'Very Good', ranking:'Top Private B-School feeder'},
+  {name:'Government ITIs', state:'Multiple States', course:'Trade Certificate', fees:'₹2K–₹15K/yr', type:'Government', placements:'Moderate', ranking:'NCVT Affiliated'},
+];
+
+// Scholarships sample dataset
+const SCHOLARSHIPS = [
+  {name:'National Scholarship Portal (NSP) — Central Sector Scheme', eligibility:'Class 12 passed, family income below prescribed limit', benefit:'Tuition & maintenance allowance', deadline:'Usually Oct–Nov (varies by year)', link:'scholarships.gov.in'},
+  {name:'Post-Matric Scholarship for SC/ST/OBC Students', eligibility:'Students from SC/ST/OBC categories post Class 10', benefit:'Fee reimbursement + maintenance allowance', deadline:'State-specific, check state portal', link:'scholarships.gov.in'},
+  {name:'Means-cum-Merit Scholarship', eligibility:'Meritorious students from economically weaker sections', benefit:'₹6,000/year (indicative)', deadline:'Announced annually via school', link:'scholarships.gov.in'},
+  {name:'State Minority Welfare Scholarships', eligibility:'Students from notified minority communities', benefit:'Tuition fee support', deadline:'Varies by state', link:'minorityaffairs.gov.in'},
+  {name:'AICTE Pragati / Saksham Scholarship', eligibility:'Girl students / differently-abled students in technical education', benefit:'₹50,000/year (indicative)', deadline:'Usually Aug–Oct', link:'aicte-india.org'},
+  {name:'Private Foundation Merit Scholarships', eligibility:'Varies — merit or need based, check individual foundation', benefit:'Partial to full tuition support', deadline:'Rolling / foundation-specific', link:'Check foundation website directly'},
+];
+
+// Blog/resources sample dataset
+const BLOGS = [
+  {tag:'Streams', title:'MPC vs BiPC vs Commerce — how to actually decide', blurb:'A framework for weighing interest, aptitude and career goals instead of picking a stream by peer pressure.', read:'6 min read'},
+  {tag:'Exams', title:'A realistic 2-year JEE/NEET preparation timeline', blurb:'How to structure Class 11 and 12 so entrance prep and school marks both stay on track.', read:'8 min read'},
+  {tag:'Skills', title:'Skills that matter more than your stream', blurb:'Communication, adaptability and problem-solving show up in almost every high-growth career path.', read:'5 min read'},
+  {tag:'Careers', title:'What does a Data Scientist actually do all day?', blurb:'A day-in-the-life breakdown to help you decide if the role matches your expectations.', read:'7 min read'},
+  {tag:'Money', title:'Scholarships every Indian student should check before ruling out a college', blurb:'Government, state and private options that can change the affordability equation entirely.', read:'6 min read'},
+  {tag:'Mindset', title:'You do not have to have it all figured out at 15', blurb:'Why career decisions after 10th are directional, not permanent — and how to leave room to pivot.', read:'4 min read'},
+];
+
+// Chatbot knowledge base — keyword-matched
+const CHAT_KB = [
+  {kw:['stream','suit','which stream'], a:"There's no single 'best' stream — it depends on what energises you. Try the Career Assessment tab: it looks at your interests, personality and aptitude and gives you a ranked list of streams with an explanation for each score, not just a label."},
+  {kw:['data scientist','without mpc'], a:"Yes, it's possible without MPC, though it's more common through it. BiPC or Commerce students can pivot into Data Science via a B.Sc/BCA with strong self-taught Python, statistics and machine learning skills, or a Master's that allows lateral entry. It takes more independent effort, but the field values demonstrated skill and portfolio work as much as the original stream."},
+  {kw:['bipc','careers after bipc'], a:"BiPC opens up Doctor, Dentist, Pharmacist, Veterinary Doctor, Biotechnology, Nursing, Physiotherapy and Agriculture-related careers. Check the Streams Guide tab for the full breakdown of each, including required skills and entrance exams."},
+  {kw:['skill','learn now','which skills'], a:"Regardless of stream, these skills compound early: clear communication, basic logical/numerical reasoning, comfort with technology, and the discipline to finish self-directed projects. Once you have an assessment result, the Skill Analyzer tab gives you a career-specific skill gap list."},
+  {kw:['neet'], a:"NEET-UG is the entrance exam for MBBS, BDS and most government medical seats in India, and it requires the BiPC stream (Biology, Physics, Chemistry) in Class 11-12."},
+  {kw:['jee'], a:"JEE Main (and JEE Advanced for IIT admission) is the entrance route for most engineering colleges, and requires the MPC stream (Maths, Physics, Chemistry)."},
+  {kw:['commerce','careers after commerce'], a:"Commerce (MEC/CEC) leads into Chartered Accountancy, Company Secretary, Investment Banking, Financial Analysis, Auditing, Business Management and Entrepreneurship. See the Streams Guide tab for the detailed pathway."},
+  {kw:['salary','pay','earn'], a:"Salary ranges vary hugely by role, city and experience — the Career Explorer tab lists indicative Indian salary bands for each career so you can compare fields on a like-for-like basis."},
+  {kw:['college','best college'], a:"Try the College Finder tab — you can filter by state, course and whether you want a Government, Private or Autonomous institution."},
+  {kw:['scholarship'], a:"Head to the Scholarships tab for government, state and private options with eligibility and deadlines. The National Scholarship Portal (scholarships.gov.in) is the best starting point for centrally-funded schemes."},
+  {kw:['roadmap','path','how to become'], a:"The Roadmaps tab has step-by-step visual journeys for careers like AI Engineer, Doctor, Chartered Accountant, Lawyer, UI/UX Designer and Merchant Navy Officer — from 10th grade all the way to the job title."},
+  {kw:['hello','hi','hey'], a:"Hi! I'm the Career Compass assistant. Ask me things like 'which stream suits me' or 'careers after BiPC', or take the full Career Assessment for a personalised, explainable recommendation."},
+];
+const CHAT_SUGGESTIONS = ["What stream suits me?","Can I become a Data Scientist without MPC?","What are the best careers after BiPC?","Which skills should I learn now?","How do I become a lawyer?","Show me scholarship options"];
+
+/* =========================================================
+   STATE  (in-memory only for this session — no browser storage)
+   ========================================================= */
+const STATE = {
+  section:'home',
+  theme:'dark',
+  answers:{},              // qId -> 1..5
+  qIndex:0,
+  traitScores:null,        // computed once assessment completes
+  streamRanking:null,      // sorted array of {stream, score}
+  bookmarks:new Set(),
+  chatHistory:[],
+  explorerFilter:'All',
+  activeRoadmap:'AI Engineer',
+  openAccordion:null,
+};
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(window.__toastT);
+  window.__toastT=setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+function clamp(n,a,b){ return Math.max(a,Math.min(b,n)); }
+
+function computeTraitScores(){
+  const sums={}, counts={};
+  Object.keys(TRAIT_LABELS).forEach(t=>{sums[t]=0;counts[t]=0;});
+  QUESTIONS.forEach(q=>{
+    const val=STATE.answers[q.id];
+    if(val==null) return;
+    Object.keys(q.tags).forEach(trait=>{
+      sums[trait]+= (val-1)/4*100;
+      counts[trait]+=1;
+    });
+  });
+  const scores={};
+  Object.keys(TRAIT_LABELS).forEach(t=>{
+    scores[t] = counts[t] ? Math.round(sums[t]/counts[t]) : 50;
+  });
+  return scores;
+}
+
+function computeHolland(scores){
+  const R = (scores.practical + scores.outdoor + scores.tech)/3;
+  const I = (scores.logical + scores.scientific + scores.numerical)/3;
+  const A = (scores.creativity + scores.design)/2;
+  const S = (scores.helping + scores.communication + scores.teamwork + scores.emotional)/4;
+  const E = (scores.leadership + scores.business + scores.risk)/3;
+  const C = (scores.detail + scores.patience)/2;
+  return {R:Math.round(R), I:Math.round(I), A:Math.round(A), S:Math.round(S), E:Math.round(E), C:Math.round(C)};
+}
+
+function computeStreamRanking(scores){
+  const rows = Object.values(STREAMS).map(s=>{
+    let score=0;
+    Object.entries(s.weights).forEach(([trait,w])=>{ score += w * scores[trait]; });
+    return {stream:s, score:Math.round(score)};
+  });
+  rows.sort((a,b)=>b.score-a.score);
+  return rows;
+}
+
+function answeredCount(){ return Object.keys(STATE.answers).length; }
+function assessmentComplete(){ return answeredCount() === QUESTIONS.length; }
+
+function finalizeAssessment(){
+  STATE.traitScores = computeTraitScores();
+  STATE.streamRanking = computeStreamRanking(STATE.traitScores);
+}
+
+/* =========================================================
+   NAV + ROUTER
+   ========================================================= */
+function renderNav(){
+  const nav=document.getElementById('navScroll');
+  nav.innerHTML = SECTIONS.map(s=>
+    `<button class="navlink ${STATE.section===s.id?'active':''}" data-goto="${s.id}">${s.label}</button>`
+  ).join('');
+}
+
+function goto(id){
+  STATE.section=id;
+  window.scrollTo({top:0, behavior:'smooth'});
+  render();
+}
+
+function render(){
+  renderNav();
+  const app=document.getElementById('app');
+  const fns={
+    home:renderHome, assessment:renderAssessment, results:renderResults, skills:renderSkills,
+    explorer:renderExplorer, streams:renderStreams, colleges:renderColleges, roadmaps:renderRoadmaps,
+    scholarships:renderScholarships, blog:renderBlog, chatbot:renderChatbot, dashboard:renderDashboard, contact:renderContact
+  };
+  app.innerHTML = fns[STATE.section] ? fns[STATE.section]() : '';
+  afterRender();
+  // rotate the nav compass needle to reflect progress through the app
+  const idx = SECTIONS.findIndex(s=>s.id===STATE.section);
+  const deg = Math.round((idx/(SECTIONS.length-1))*340);
+  const needle=document.getElementById('navNeedle');
+  if(needle) needle.style.transform=`rotate(${deg}deg)`;
+}
+
+function afterRender(){
+  // hero needle animate-in
+  const heroNeedle=document.getElementById('heroNeedle');
+  if(heroNeedle){
+    heroNeedle.style.transform='rotate(-40deg)';
+    heroNeedle.style.transition='transform 1.4s cubic-bezier(.16,1,.3,1)';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ heroNeedle.style.transform='rotate(28deg)'; }));
+  }
+
+  // assessment: likert answer
+  document.querySelectorAll('.likert button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const qid = Number(btn.closest('.likert').dataset.qid);
+      STATE.answers[qid] = Number(btn.dataset.val);
+      render();
+    });
+  });
+  const nextQ=document.getElementById('nextQ');
+  if(nextQ) nextQ.addEventListener('click', ()=>{
+    if(STATE.qIndex < QUESTIONS.length-1){ STATE.qIndex++; render(); }
+    else { finalizeAssessment(); STATE.__reviewing=false; render(); }
+  });
+  const prevQ=document.getElementById('prevQ');
+  if(prevQ) prevQ.addEventListener('click', ()=>{ if(STATE.qIndex>0){ STATE.qIndex--; render(); } });
+  const retakeBtn=document.getElementById('retakeBtn');
+  if(retakeBtn) retakeBtn.addEventListener('click', ()=>{ STATE.__reviewing=true; STATE.qIndex=0; render(); });
+
+  // explorer filters
+  document.querySelectorAll('[data-explorer-filter]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ STATE.explorerFilter=btn.dataset.explorerFilter; render(); });
+  });
+  document.querySelectorAll('[data-career-open]').forEach(card=>{
+    card.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-bookmark]')) return;
+      document.body.insertAdjacentHTML('beforeend', careerModal(card.dataset.careerOpen));
+      bindModal();
+    });
+  });
+  document.querySelectorAll('[data-bookmark]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const id=btn.dataset.bookmark;
+      if(STATE.bookmarks.has(id)){ STATE.bookmarks.delete(id); toast('Removed bookmark'); }
+      else { STATE.bookmarks.add(id); toast('Career bookmarked'); }
+      render();
+      const backdrop=document.getElementById('careerModalBack');
+      if(backdrop) backdrop.remove();
+    });
+  });
+
+  // streams accordion
+  document.querySelectorAll('[data-acc-toggle]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id=btn.dataset.accToggle;
+      STATE.openAccordion = STATE.openAccordion===id ? null : id;
+      render();
+    });
+  });
+
+  // college filters
+  document.querySelectorAll('[data-college-course]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ STATE.collegeFilters=STATE.collegeFilters||{course:'All',type:'All'}; STATE.collegeFilters.course=btn.dataset.collegeCourse; render(); });
+  });
+  document.querySelectorAll('[data-college-type]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ STATE.collegeFilters=STATE.collegeFilters||{course:'All',type:'All'}; STATE.collegeFilters.type=btn.dataset.collegeType; render(); });
+  });
+
+  // roadmap tabs
+  document.querySelectorAll('[data-roadmap]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ STATE.activeRoadmap=btn.dataset.roadmap; render(); });
+  });
+
+  // chatbot
+  const chatSend=document.getElementById('chatSend');
+  const chatInput=document.getElementById('chatInput');
+  function sendChat(){
+    const val=chatInput.value.trim();
+    if(!val) return;
+    STATE.chatHistory.push({who:'user', text:val});
+    STATE.chatHistory.push({who:'bot', text:chatReply(val)});
+    chatInput.value='';
+    render();
+    const log=document.getElementById('chatLog');
+    if(log) log.scrollTop=log.scrollHeight;
+  }
+  if(chatSend) chatSend.addEventListener('click', sendChat);
+  if(chatInput) chatInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') sendChat(); });
+  document.querySelectorAll('[data-chat-suggest]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      STATE.chatHistory.push({who:'user', text:btn.dataset.chatSuggest});
+      STATE.chatHistory.push({who:'bot', text:chatReply(btn.dataset.chatSuggest)});
+      render();
+    });
+  });
+  const chatLog=document.getElementById('chatLog');
+  if(chatLog) chatLog.scrollTop=chatLog.scrollHeight;
+
+  // contact form
+  const contactForm=document.getElementById('contactForm');
+  if(contactForm) contactForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    toast('Message sent — we will get back to you soon.');
+    contactForm.reset();
+  });
+}
+
+function bindModal(){
+  const back=document.getElementById('careerModalBack');
+  const close=document.getElementById('closeModal');
+  if(close) close.addEventListener('click', ()=>back.remove());
+  if(back) back.addEventListener('click', (e)=>{ if(e.target===back) back.remove(); });
+  document.querySelectorAll('#careerModalBack [data-bookmark]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id=btn.dataset.bookmark;
+      if(STATE.bookmarks.has(id)){ STATE.bookmarks.delete(id); toast('Removed bookmark'); }
+      else { STATE.bookmarks.add(id); toast('Career bookmarked'); }
+      back.remove();
+      render();
+    });
+  });
+  document.querySelectorAll('#careerModalBack [data-goto]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ back.remove(); goto(btn.dataset.goto); });
+  });
+}
+
+document.addEventListener('click', (e)=>{
+  const nb = e.target.closest('[data-goto]');
+  if(nb && !e.target.closest('.modal')){ goto(nb.dataset.goto); return; }
+});
+
+/* =========================================================
+   INIT
+   ========================================================= */
+render();
+
+document.getElementById('modeToggle').addEventListener('click', ()=>{
+  STATE.theme = STATE.theme==='dark' ? 'light' : 'dark';
+  document.body.classList.toggle('light', STATE.theme==='light');
+  document.getElementById('modeToggle').textContent = STATE.theme==='light' ? '☀️' : '🌙';
+});
+
+/* =========================================================
+   ASSESSMENT
+   ========================================================= */
+function renderAssessment(){
+  const total=QUESTIONS.length;
+  const done=answeredCount();
+  const pct=Math.round((done/total)*100);
+
+  if(assessmentComplete() && !STATE.__reviewing){
+    return `
+    <section class="section tight">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Career assessment</div>
+          <h2>You've completed all 30 questions.</h2>
+          <p>Your responses are saved for this session. Head to your AI recommendation, or retake the assessment if you want to change any answers.</p>
+        </div>
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <button class="btn btn-primary" data-goto="results">See my AI Recommendation →</button>
+          <button class="btn btn-ghost" id="retakeBtn">Review / retake answers</button>
+        </div>
+      </div>
+    </section>`;
+  }
+
+  const i = clamp(STATE.qIndex, 0, total-1);
+  const q = QUESTIONS[i];
+  const picked = STATE.answers[q.id];
+  const labels=['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'];
+
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:22px;">
+        <div class="eyebrow">Career assessment · question ${i+1} of ${total}</div>
+        <h2>What genuinely sounds like you?</h2>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <span class="mono" style="font-size:12.5px;color:var(--muted);">${done}/${total} answered</span>
+      </div>
+
+      <div class="card q-card">
+        <div class="q-index">QUESTION ${String(i+1).padStart(2,'0')}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="likert" data-qid="${q.id}">
+          ${[1,2,3,4,5].map(v=>`<button data-val="${v}" class="${picked===v?'picked':''}">${labels[v-1]}</button>`).join('')}
+        </div>
+        <div class="q-nav">
+          <button class="btn btn-ghost btn-sm" id="prevQ" ${i===0?'disabled':''}>← Back</button>
+          <div class="q-dots">
+            ${QUESTIONS.map((qq,idx)=>`<div class="q-dot ${STATE.answers[qq.id]!=null?'done':''} ${idx===i?'current':''}"></div>`).join('')}
+          </div>
+          <button class="btn btn-primary btn-sm" id="nextQ" ${picked==null?'disabled':''}>${i===total-1?'Finish':'Next →'}</button>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   RESULTS — AI Recommendation Engine
+   ========================================================= */
+function renderResults(){
+  if(!assessmentComplete()){
+    return emptyState('🧭','Take the assessment first', 'Your AI recommendation is built entirely from your assessment answers — complete all 30 questions to unlock a fully explained, ranked result.', 'assessment', 'Go to Career Assessment');
+  }
+  if(!STATE.streamRanking) finalizeAssessment();
+
+  const scores=STATE.traitScores;
+  const holland=computeHolland(scores);
+  const ranking=STATE.streamRanking;
+  const top=ranking[0];
+  const s=top.stream;
+
+  const hollandOrder=[['R','Realistic'],['I','Investigative'],['A','Artistic'],['S','Social'],['E','Enterprising'],['C','Conventional']];
+  const hollandTop = hollandOrder.slice().sort((a,b)=>holland[b[0]]-holland[a[0]])[0][0];
+
+  const sortedTraits = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const strengths = sortedTraits.slice(0,3).map(t=>TRAIT_LABELS[t[0]]);
+  const weaknesses = sortedTraits.slice(-3).map(t=>TRAIT_LABELS[t[0]]);
+
+  const gapCareer = CAREERS.find(c=>c.stream===s.id);
+  const gap = gapCareer ? (SKILL_GAPS[gapCareer.id]||DEFAULT_SKILL_GAP) : DEFAULT_SKILL_GAP;
+
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="eyebrow">Your AI recommendation</div>
+      <div class="card result-hero">
+        <div class="result-top">
+          <svg class="score-ring" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="var(--surface3)" stroke-width="10"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="10"
+              stroke-dasharray="${2*Math.PI*52}" stroke-dashoffset="${2*Math.PI*52*(1-top.score/100)}"
+              stroke-linecap="round" transform="rotate(-90 60 60)"/>
+            <text x="60" y="56" text-anchor="middle" font-family="Fraunces" font-size="28" fill="var(--text)" font-weight="600">${top.score}%</text>
+            <text x="60" y="76" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="var(--muted)">MATCH</text>
+          </svg>
+          <div>
+            <div class="pill">Top recommendation</div>
+            <h2 style="font-size:26px;margin-top:10px;">${s.name}</h2>
+            <p style="color:var(--muted);font-size:14px;margin-top:8px;max-width:520px;">${s.suitableFor}</p>
+            <div class="holland-row">
+              ${hollandOrder.map(([code,label])=>`<div class="holland-badge ${code===hollandTop?'top':''}" title="${label}: ${holland[code]}%">${code}</div>`).join('')}
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h4>Why this fits</h4>
+            <p style="font-size:13.5px;color:var(--muted);line-height:1.65;">Your strongest signals were <b style="color:var(--text)">${strengths.join(', ')}</b> — these map closely onto what ${s.name.split('—')[0].trim()} rewards. Your Holland Code leans <b style="color:var(--text)">${hollandOrder.find(h=>h[0]===hollandTop)[1]}</b>, which is consistent with students who thrive in this pathway.</p>
+          </div>
+          <div class="detail-box">
+            <h4>Where to grow</h4>
+            <p style="font-size:13.5px;color:var(--muted);line-height:1.65;">Your relatively lower signals were <b style="color:var(--text)">${weaknesses.join(', ')}</b>. That's not disqualifying — it just tells you which muscles to consciously build alongside your coursework.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:32px;margin-top:22px;">
+        <h4 class="mono" style="font-size:13px;color:var(--accent2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:18px;">Full pathway ranking — and why each scored the way it did</h4>
+        ${ranking.map((r,idx)=>`
+          <div class="rank-row ${idx===0?'top':''}">
+            <span class="mono" style="width:22px;color:var(--muted);">${idx+1}</span>
+            <span style="width:220px;font-size:13.5px;">${r.stream.name.split('—')[0].trim()}</span>
+            <div class="rank-bar-track"><div class="rank-bar-fill" style="width:${r.score}%"></div></div>
+            <span class="mono" style="width:44px;text-align:right;color:${idx===0?'var(--accent)':'var(--muted)'};">${r.score}%</span>
+          </div>
+        `).join('')}
+        <p style="font-size:12.5px;color:var(--muted-dim);margin-top:16px;">Scores are a weighted match between your trait profile and the skills each pathway leans on most — e.g. Commerce weighs business thinking and numerical ability heavily, while Creative & Vocational weighs creativity and design sense.</p>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:22px;">
+        <div class="card" style="padding:28px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:14px;">Suitable careers</h4>
+          <div class="chip-list">${s.careers.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+        </div>
+        <div class="card" style="padding:28px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:14px;">Recommended certifications &amp; next steps</h4>
+          <ul class="plain">${gap.certs.map(c=>`<li>${c}</li>`).join('')}</ul>
+        </div>
+        <div class="card" style="padding:28px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:14px;">Entrance exams to research</h4>
+          <ul class="plain">${s.exams.map(e=>`<li>${e}</li>`).join('')}</ul>
+        </div>
+        <div class="card" style="padding:28px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:14px;">Colleges to shortlist</h4>
+          <ul class="plain">${s.colleges.map(c=>`<li>${c}</li>`).join('')}</ul>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:18px;">
+        <div class="card" style="padding:28px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:14px;">Future demand &amp; salary range</h4>
+          <p style="font-size:13.5px;color:var(--muted);line-height:1.6;"><b style="color:var(--text)">Demand:</b> ${s.demand}</p>
+          <p style="font-size:13.5px;color:var(--muted);line-height:1.6;margin-top:6px;"><b style="color:var(--text)">Indicative salary range:</b> ${s.salary}</p>
+        </div>
+        <div class="card" style="padding:28px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:14px;">Alternative pathways worth a look</h4>
+          <ul class="plain">${ranking.slice(1,3).map(r=>`<li>${r.stream.name.split('—')[0].trim()} — ${r.score}% match</li>`).join('')}</ul>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:14px; margin-top:26px; flex-wrap:wrap;">
+        <button class="btn btn-primary" data-goto="skills">See my full Skill Analysis →</button>
+        <button class="btn btn-ghost" data-goto="roadmaps">View a Learning Roadmap</button>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   SKILL ANALYZER
+   ========================================================= */
+function renderSkills(){
+  if(!assessmentComplete()){
+    return emptyState('📊','No aptitude data yet','Complete the Career Assessment so we can chart your aptitude profile and generate a career-specific skill gap.', 'assessment', 'Go to Career Assessment');
+  }
+  if(!STATE.streamRanking) finalizeAssessment();
+  const scores=STATE.traitScores;
+  const top=STATE.streamRanking[0].stream;
+  const gapCareer = CAREERS.find(c=>c.stream===top.id);
+  const gap = gapCareer ? (SKILL_GAPS[gapCareer.id]||DEFAULT_SKILL_GAP) : DEFAULT_SKILL_GAP;
+
+  const radarTraits = ['logical','numerical','communication','creativity','observation','leadership','practical','emotional'];
+  const cx=170, cy=170, R=140;
+  const n=radarTraits.length;
+  const pts = radarTraits.map((t,i)=>{
+    const ang = -Math.PI/2 + i*(2*Math.PI/n);
+    const r = R * (scores[t]/100);
+    return [cx + r*Math.cos(ang), cy + r*Math.sin(ang)];
+  });
+  const ringPts=(frac)=>radarTraits.map((t,i)=>{
+    const ang=-Math.PI/2+i*(2*Math.PI/n);
+    return `${cx+R*frac*Math.cos(ang)},${cy+R*frac*Math.sin(ang)}`;
+  }).join(' ');
+  const polygon = pts.map(p=>p.join(',')).join(' ');
+  const labelPts = radarTraits.map((t,i)=>{
+    const ang=-Math.PI/2+i*(2*Math.PI/n);
+    const r=R+26;
+    return {x:cx+r*Math.cos(ang), y:cy+r*Math.sin(ang), t};
+  });
+
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Skill analyzer</div>
+        <h2>Your aptitude profile, charted</h2>
+        <p>Scores are derived from your assessment responses and shown as percentages, not raw ranks.</p>
+      </div>
+
+      <div class="card" style="padding:32px;">
+        <div class="radar-wrap">
+          <svg width="340" height="340" viewBox="0 0 340 340">
+            ${[0.25,0.5,0.75,1].map(f=>`<polygon points="${ringPts(f)}" fill="none" stroke="var(--line-strong)" stroke-width="1"/>`).join('')}
+            ${labelPts.map(p=>`<line x1="${cx}" y1="${cy}" x2="${p.x + (p.x>cx?-14:p.x<cx?14:0)}" y2="${p.y + (p.y>cy?-10:p.y<cy?10:0)}" stroke="var(--line)" stroke-width="1"/>`).join('')}
+            <polygon points="${polygon}" fill="var(--accent2)" fill-opacity="0.22" stroke="var(--accent2)" stroke-width="2"/>
+            ${pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--accent)"/>`).join('')}
+            ${labelPts.map(p=>`<text x="${p.x}" y="${p.y}" text-anchor="middle" font-size="10.5" fill="var(--muted)" font-family="IBM Plex Mono">${TRAIT_LABELS[p.t].split(' ')[0]}</text>`).join('')}
+          </svg>
+          <div class="radar-legend">
+            ${radarTraits.map(t=>`<div class="row"><span>${TRAIT_LABELS[t]}</span><span>${scores[t]}%</span></div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:44px;">
+        <div class="eyebrow">Skill gap — for ${gapCareer? gapCareer.name : top.name.split('—')[0].trim()}</div>
+        <h2>What to build next</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="card" style="padding:26px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:12px;">Current skills</h4>
+          <ul class="plain">${gap.current.map(x=>`<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="card" style="padding:26px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--danger);margin-bottom:12px;">Missing skills</h4>
+          <ul class="plain">${gap.missing.map(x=>`<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="card" style="padding:26px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:12px;">Learning resources</h4>
+          <ul class="plain">${gap.resources.map(x=>`<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="card" style="padding:26px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:12px;">Suggested projects</h4>
+          <ul class="plain">${gap.projects.map(x=>`<li>${x}</li>`).join('')}</ul>
+        </div>
+      </div>
+      <div class="card" style="padding:22px 26px;margin-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <span style="font-size:13.5px;color:var(--muted);">Estimated learning timeline</span>
+        <span class="pill mono">${gap.timeline}</span>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   CAREER EXPLORER
+   ========================================================= */
+function renderExplorer(){
+  const filter = STATE.explorerFilter;
+  const list = filter==='All' ? CAREERS : CAREERS.filter(c=>c.category===filter);
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Career explorer</div>
+        <h2>${CAREERS.length}+ careers, explained plainly</h2>
+        <p>Each card covers the core skills, typical education path, indicative salary and demand outlook. Bookmark any career to revisit it from your Dashboard.</p>
+      </div>
+      <div class="filter-row">
+        ${CAREER_CATEGORIES.map(c=>`<button class="filter-chip ${c===filter?'active':''}" data-explorer-filter="${c}">${c}</button>`).join('')}
+      </div>
+      <div class="grid grid-3">
+        ${list.map(c=>`
+          <div class="card career-card" data-career-open="${c.id}">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="tag">${c.category}</span>
+              <button class="bookmark-btn ${STATE.bookmarks.has(c.id)?'on':''}" data-bookmark="${c.id}">${STATE.bookmarks.has(c.id)?'★':'☆'}</button>
+            </div>
+            <h3>${c.name}</h3>
+            <p class="desc">${c.desc}</p>
+            <div class="meta">
+              <span class="pill">${c.demand} demand</span>
+              <span class="pill mono">${c.salary}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  </section>`;
+}
+
+function careerModal(id){
+  const c=CAREERS.find(x=>x.id===id);
+  if(!c) return '';
+  return `
+  <div class="modal-back" id="careerModalBack">
+    <div class="modal">
+      <button class="modal-close" id="closeModal">✕</button>
+      <span class="tag">${c.category}</span>
+      <h2 style="font-size:24px;margin-top:14px;">${c.name}</h2>
+      <p style="color:var(--muted);font-size:14px;margin-top:10px;line-height:1.6;">${c.desc}</p>
+      <div class="grid grid-2" style="margin-top:22px;">
+        <div class="detail-box">
+          <h4>Key skills</h4>
+          <div class="chip-list">${c.skills.map(s=>`<span class="chip">${s}</span>`).join('')}</div>
+        </div>
+        <div class="detail-box">
+          <h4>Typical education</h4>
+          <p style="font-size:13.5px;color:var(--muted);">${c.edu}</p>
+        </div>
+        <div class="detail-box">
+          <h4>Indicative salary (India)</h4>
+          <p style="font-size:13.5px;color:var(--muted);">${c.salary}</p>
+        </div>
+        <div class="detail-box">
+          <h4>Demand outlook</h4>
+          <p style="font-size:13.5px;color:var(--muted);">${c.demand}</p>
+        </div>
+      </div>
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" data-bookmark="${c.id}">${STATE.bookmarks.has(c.id)?'★ Bookmarked':'☆ Bookmark this career'}</button>
+        <button class="btn btn-ghost btn-sm" data-goto="streams">See full stream: ${STREAMS[c.stream].name.split('—')[0].trim()}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function emptyState(icon, title, body, gotoId, cta){
+  return `<section class="section">
+    <div class="container">
+      <div class="card empty-state">
+        <div class="ic">${icon}</div>
+        <h3 style="font-size:20px;margin-bottom:10px;">${title}</h3>
+        <p style="max-width:440px;margin:0 auto 22px;font-size:14px;">${body}</p>
+        <button class="btn btn-primary" data-goto="${gotoId}">${cta}</button>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   STREAMS GUIDE
+   ========================================================= */
+function renderStreams(){
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Educational streams guide</div>
+        <h2>Every pathway after 10th, in one place</h2>
+        <p>Click a pathway to see subjects, suitable careers, required skills, entrance exams and colleges to shortlist.</p>
+      </div>
+      ${Object.values(STREAMS).map(s=>`
+        <div class="acc-item ${STATE.openAccordion===s.id?'open':''}" data-acc="${s.id}">
+          <button class="acc-head" data-acc-toggle="${s.id}">
+            <div><h3>${s.icon}&nbsp; ${s.name}</h3><div class="sub">${s.subjects.join(' · ')}</div></div>
+            <span class="acc-chevron">+</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <div class="detail-box">
+                <h4>Suitable for</h4>
+                <p style="font-size:13.5px;color:var(--muted);line-height:1.6;">${s.suitableFor}</p>
+                <h4 style="margin-top:18px;">Required skills</h4>
+                <div class="chip-list">${s.skills.map(x=>`<span class="chip">${x}</span>`).join('')}</div>
+              </div>
+              <div class="detail-box">
+                <h4>Career options</h4>
+                <div class="chip-list">${s.careers.map(x=>`<span class="chip">${x}</span>`).join('')}</div>
+                <h4 style="margin-top:18px;">Entrance exams</h4>
+                <ul class="plain">${s.exams.map(x=>`<li>${x}</li>`).join('')}</ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   COLLEGE FINDER
+   ========================================================= */
+function renderColleges(){
+  const state=STATE.collegeFilters||{course:'All', type:'All'};
+  STATE.collegeFilters=state;
+  const courses=['All', ...new Set(COLLEGES.map(c=>c.course))];
+  const types=['All','Government','Government-aided','Private','Private/Autonomous'];
+  let list=COLLEGES;
+  if(state.course!=='All') list=list.filter(c=>c.course===state.course);
+  if(state.type!=='All') list=list.filter(c=>c.type===state.type);
+
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">College finder</div>
+        <h2>Shortlist by course, fees and ownership</h2>
+        <p>A sample national dataset to help you compare options at a glance — always confirm current fees and cut-offs on the official college website.</p>
+      </div>
+      <div class="filter-row">
+        <span class="pill mono" style="background:none;border:none;padding-left:0;">Course:</span>
+        ${courses.map(c=>`<button class="filter-chip ${state.course===c?'active':''}" data-college-course="${c}">${c}</button>`).join('')}
+      </div>
+      <div class="filter-row">
+        <span class="pill mono" style="background:none;border:none;padding-left:0;">Type:</span>
+        ${types.map(t=>`<button class="filter-chip ${state.type===t?'active':''}" data-college-type="${t}">${t}</button>`).join('')}
+      </div>
+      <div class="card" style="overflow:hidden;">
+        <div class="college-row head"><span>College</span><span>Course</span><span>Fees</span><span>Type</span><span>Placements</span></div>
+        ${list.map(c=>`
+          <div class="college-row">
+            <span><b>${c.name}</b><br><span style="color:var(--muted-dim);font-size:12px;">${c.state} · ${c.ranking}</span></span>
+            <span>${c.course}</span>
+            <span class="mono">${c.fees}</span>
+            <span>${c.type}</span>
+            <span>${c.placements}</span>
+          </div>
+        `).join('') || `<div style="padding:30px;text-align:center;color:var(--muted);">No colleges match these filters.</div>`}
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   ROADMAPS
+   ========================================================= */
+function renderRoadmaps(){
+  const active=STATE.activeRoadmap;
+  const steps=ROADMAPS[active];
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Learning roadmaps</div>
+        <h2>From 10th grade to the job title</h2>
+        <p>A visual, step-by-step trail — pick a career to see the realistic sequence of decisions ahead.</p>
+      </div>
+      <div class="roadmap-tabs">
+        ${Object.keys(ROADMAPS).map(k=>`<button class="filter-chip ${k===active?'active':''}" data-roadmap="${k}">${k}</button>`).join('')}
+      </div>
+      <div class="card" style="padding:36px;">
+        <div class="trail">
+          ${steps.map((s,i)=>`
+            <div class="trail-node ${i===steps.length-1?'final':''}">
+              <h4>${s}</h4>
+              <p>${i===0?'Starting point':i===steps.length-1?'Destination career':'Waypoint '+i}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   SCHOLARSHIPS
+   ========================================================= */
+function renderScholarships(){
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Scholarships</div>
+        <h2>Funding shouldn't be the reason a door closes</h2>
+        <p>Sample schemes to start your search — eligibility and deadlines change yearly, so always verify on the official portal before applying.</p>
+      </div>
+      <div class="grid grid-3">
+        ${SCHOLARSHIPS.map(sc=>`
+          <div class="card res-card">
+            <span class="tag">${sc.deadline}</span>
+            <h3>${sc.name}</h3>
+            <p><b style="color:var(--text);">Eligibility:</b> ${sc.eligibility}</p>
+            <p style="margin-top:8px;"><b style="color:var(--text);">Benefit:</b> ${sc.benefit}</p>
+            <div class="footline"><span>Source</span><span class="mono">${sc.link}</span></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   BLOG & RESOURCES
+   ========================================================= */
+function renderBlog(){
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Blogs &amp; resources</div>
+        <h2>Reading for the in-between moments</h2>
+        <p>Short, practical reads — not motivational filler.</p>
+      </div>
+      <div class="grid grid-3">
+        ${BLOGS.map(b=>`
+          <div class="card res-card">
+            <span class="tag">${b.tag}</span>
+            <h3>${b.title}</h3>
+            <p>${b.blurb}</p>
+            <div class="footline"><span>${b.read}</span><span>📖</span></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   AI CHATBOT
+   ========================================================= */
+function chatReply(userText){
+  const low = userText.toLowerCase();
+  for(const item of CHAT_KB){
+    if(item.kw.some(k=>low.includes(k))) return item.a;
+  }
+  return "I'm not fully sure about that one yet — but here's what I can help with: stream selection, careers after a specific stream, skills to build, entrance exams, scholarships, colleges, or a step-by-step roadmap. Or take the full Career Assessment for a personalised answer.";
+}
+
+function renderChatbot(){
+  if(STATE.chatHistory.length===0){
+    STATE.chatHistory.push({who:'bot', text:"Hi! I'm the Career Compass assistant. Ask me anything about streams, careers, skills or exams — or tap a suggestion to get started."});
+  }
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">AI career chatbot</div>
+        <h2>Ask in plain language</h2>
+        <p>Rule-based answers tuned for common questions students ask after Class 10. For a fully personalised result, take the Career Assessment instead.</p>
+      </div>
+      <div class="chat-shell">
+        <div class="chat-side">
+          <h4>Try asking</h4>
+          ${CHAT_SUGGESTIONS.map(s=>`<button class="chat-suggest" data-chat-suggest="${s.replace(/"/g,'&quot;')}">${s}</button>`).join('')}
+        </div>
+        <div class="chat-main">
+          <div class="chat-log" id="chatLog">
+            ${STATE.chatHistory.map(m=>`<div class="msg ${m.who}">${m.text}</div>`).join('')}
+          </div>
+          <div class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Type your question…" />
+            <button class="btn btn-primary btn-sm" id="chatSend">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   STUDENT DASHBOARD
+   ========================================================= */
+function renderDashboard(){
+  const done = assessmentComplete();
+  const pct = Math.round((answeredCount()/QUESTIONS.length)*100);
+  const top = done ? (STATE.streamRanking ? STATE.streamRanking[0] : (finalizeAssessment(), STATE.streamRanking[0])) : null;
+  const bookmarked = CAREERS.filter(c=>STATE.bookmarks.has(c.id));
+
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Student dashboard</div>
+        <h2>Everything you've done this session</h2>
+        <p>Saved in your browser session only — nothing is uploaded or shared.</p>
+      </div>
+      <div class="grid grid-4">
+        <div class="card dash-stat"><div class="big">${pct}%</div><div class="lbl">Assessment progress</div></div>
+        <div class="card dash-stat"><div class="big">${done?top.score+'%':'—'}</div><div class="lbl">Top pathway match</div></div>
+        <div class="card dash-stat"><div class="big">${bookmarked.length}</div><div class="lbl">Careers bookmarked</div></div>
+        <div class="card dash-stat"><div class="big">${STATE.chatHistory.filter(m=>m.who==='user').length}</div><div class="lbl">Chatbot questions asked</div></div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:22px;">
+        <div class="card" style="padding:26px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:14px;">Career report</h4>
+          ${done ? `
+            <p style="font-size:14px;">Top recommendation: <b>${top.stream.name.split('—')[0].trim()}</b> (${top.score}% match)</p>
+            <button class="btn btn-ghost btn-sm" style="margin-top:14px;" data-goto="results">Open full report →</button>
+          ` : `<p style="color:var(--muted);font-size:13.5px;">No report yet.</p><button class="btn btn-ghost btn-sm" style="margin-top:14px;" data-goto="assessment">Start assessment →</button>`}
+        </div>
+        <div class="card" style="padding:26px;">
+          <h4 class="mono" style="font-size:12.5px;color:var(--accent2);margin-bottom:14px;">Bookmarked careers</h4>
+          ${bookmarked.length ? `<div class="chip-list">${bookmarked.map(c=>`<span class="chip">${c.name}</span>`).join('')}</div>` : `<p style="color:var(--muted);font-size:13.5px;">Bookmark careers from the Career Explorer to see them here.</p>`}
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+function renderContact(){
+  return `
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Contact</div>
+        <h2>Questions, feedback, partnerships</h2>
+        <p>This demo form doesn't send anywhere yet — wire it up to your backend of choice when you're ready to go live.</p>
+      </div>
+      <div class="card" style="padding:34px;max-width:560px;">
+        <form id="contactForm">
+          <div class="form-row"><label>Name</label><input type="text" required placeholder="Your full name"/></div>
+          <div class="form-row"><label>Email</label><input type="email" required placeholder="you@example.com"/></div>
+          <div class="form-row"><label>I am a</label>
+            <select><option>Student</option><option>Parent</option><option>School / Counsellor</option><option>Other</option></select>
+          </div>
+          <div class="form-row"><label>Message</label><textarea required placeholder="How can we help?"></textarea></div>
+          <button class="btn btn-primary" type="submit">Send message</button>
+        </form>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   HOME
+   ========================================================= */
+function renderHome(){
+  const pct = Math.round((answeredCount()/QUESTIONS.length)*100);
+  return `
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">For students after Class 10</div>
+        <h1>Find the path that actually fits <em>you</em> — not your neighbour's rank list.</h1>
+        <p class="lead">Career Compass AI reads your interests, personality and aptitude, then explains — in plain language — which stream, skills and roadmap suit you best. No black-box scores. Every recommendation shows its working.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" data-goto="assessment">Start Career Assessment →</button>
+          <button class="btn btn-ghost" data-goto="chatbot">Ask the AI Chatbot</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><b>9</b><span>Educational pathways covered</span></div>
+          <div class="hero-stat"><b>${CAREERS.length}+</b><span>Careers explored in depth</span></div>
+          <div class="hero-stat"><b>30</b><span>Assessment questions</span></div>
+          <div class="hero-stat"><b>${pct}%</b><span>Your assessment progress</span></div>
+        </div>
+      </div>
+      <div class="compass-hero">
+        <svg viewBox="0 0 400 400" width="100%" height="100%">
+          <circle cx="200" cy="200" r="188" fill="none" stroke="var(--line-strong)" stroke-width="1"/>
+          <circle cx="200" cy="200" r="150" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 6"/>
+          <circle cx="200" cy="200" r="110" fill="none" stroke="var(--line)" stroke-width="1"/>
+          ${['N','E','S','W'].map((d,i)=>{
+            const ang=i*90, rad=ang*Math.PI/180, x=200+170*Math.sin(rad), y=200-170*Math.cos(rad);
+            return `<text x="${x}" y="${y}" text-anchor="middle" fill="var(--muted)" font-family="IBM Plex Mono" font-size="13">${d}</text>`;
+          }).join('')}
+          <g style="transform-origin:200px 200px" id="heroNeedle">
+            <polygon points="200,60 218,200 200,340 182,200" fill="var(--accent)" opacity="0.9"/>
+            <polygon points="200,60 218,200 200,200 182,200" fill="var(--accent2)" opacity="0.9"/>
+          </g>
+          <circle cx="200" cy="200" r="10" fill="var(--text)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="container">
+      <p class="eyebrow" style="margin-top:10px;">Educational pathways</p>
+      <div class="stream-strip">
+        ${Object.values(STREAMS).map(s=>`
+          <div class="stream-chip">
+            <div class="ic">${s.icon}</div>
+            <h4>${s.name.split('—')[0].trim()}</h4>
+            <p>${s.subjects.slice(0,3).join(', ')}</p>
+          </div>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">How it works</div>
+        <h2>Three honest steps, not one guess</h2>
+        <p>Career Compass never assigns a stream at random. It builds a trait profile from your answers, scores every pathway against that profile, and always shows the reasoning.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card" style="padding:26px;">
+          <div class="tag">Step 1</div>
+          <h3 style="margin-top:14px;font-size:18px;">Answer honestly</h3>
+          <p style="color:var(--muted);font-size:13.5px;margin-top:10px;line-height:1.6;">30 short questions on interests, personality and aptitude. Takes about 8 minutes, and you can leave and come back within the session.</p>
+        </div>
+        <div class="card" style="padding:26px;">
+          <div class="tag">Step 2</div>
+          <h3 style="margin-top:14px;font-size:18px;">See the full ranking</h3>
+          <p style="color:var(--muted);font-size:13.5px;margin-top:10px;line-height:1.6;">Every one of the 9 pathways gets a transparent score — including why the lower-ranked ones scored lower.</p>
+        </div>
+        <div class="card" style="padding:26px;">
+          <div class="tag">Step 3</div>
+          <h3 style="margin-top:14px;font-size:18px;">Get a real roadmap</h3>
+          <p style="color:var(--muted);font-size:13.5px;margin-top:10px;line-height:1.6;">Skill gaps, certifications, entrance exams, colleges and a step-by-step path from today to the job title.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  `;
+}
+</script>
+</body>
+</html>
